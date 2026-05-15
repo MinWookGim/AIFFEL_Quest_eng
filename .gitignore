@@ -1,0 +1,137 @@
+# ============================================================
+# OS
+# ============================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# Windows
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============================================================
+# Editor / IDE
+# ============================================================
+# VS Code
+.vscode/
+*.code-workspace
+.history/
+
+# JetBrains (PyCharm, IntelliJ)
+.idea/
+*.iml
+out/
+.idea_modules/
+
+# Vim
+*.swp
+*.swo
+*.swn
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg
+*.egg-info/
+*.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual env
+.venv/
+venv/
+env/
+ENV/
+
+# Testing / linting / type checking
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+.nox/
+
+# ============================================================
+# Jupyter / IPython
+# ============================================================
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+# Notebook HTML export
+*.html
+
+# ============================================================
+# Secrets / local config
+# ============================================================
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets.json
+
+# ============================================================
+# Logs / temp
+# ============================================================
+*.log
+logs/
+tmp/
+temp/
+.cache/
+
+# ============================================================
+# Large data / model artifacts
+#   (커밋이 필요하면 개별 폴더에서 git add -f 로 강제 추가)
+# ============================================================
+# Model weights
+*.h5
+*.pkl
+*.pt
+*.pth
+*.onnx
+*.ckpt
+*.safetensors
+*.bin
+*.tflite
+*.pb
+
+# Data arrays
+*.npy
+*.npz
+*.parquet
+*.feather
+
+# Datasets / checkpoints (디렉토리)
+data/
+datasets/
+checkpoints/
+runs/
+wandb/
+mlruns/
