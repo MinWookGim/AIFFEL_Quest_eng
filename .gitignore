@@ -142,6 +142,8 @@ mlruns/
 
 # CV01 고양이 수염 스티커 - 캔바 원본(고해상도 10~26MB) 제외, 줄인 것만 커밋
 03_Computer_Vision/CV01/images/quest_img/
+# CV02 인물모드 - 후보 원본(185MB) 제외, 실제 쓰는 사진만 커밋
+03_Computer_Vision/CV02/images/quest_img/
 # 실험 중 잠깐 생기는 임시 이미지
 **/_tmp_*.png
 # 본인 셀카 - 깃허브에 안 올림 (캔바 사진으로 대체)
