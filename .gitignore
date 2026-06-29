@@ -163,3 +163,14 @@ mlruns/
 참고/
 *_원본백업_*.ipynb
 kaggle-kakr-housing-data.zip
+
+# ============================================================
+# NLP01 - 데이터·연습본·생성물 (제출물 korean_to_english_translator.ipynb 만 커밋)
+# ============================================================
+04_NLP/NLP01/work/
+04_NLP/NLP01/*_corpus.txt
+04_NLP/NLP01/*_spm.model
+04_NLP/NLP01/*_spm.vocab
+04_NLP/NLP01/s2s_translation_proj.ipynb
+# kaggle 제출 csv (생성물)
+**/submission.csv
