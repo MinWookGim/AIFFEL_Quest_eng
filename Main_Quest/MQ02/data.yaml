@@ -1,0 +1,8 @@
+path: /home/gmw/Documents/AIFFEL_Work/_scratch/Main_Quest/MQ02/data/split
+train: train/images
+val: val/images
+test: test/images
+nc: 2
+names:
+  0: dirt
+  1: damage

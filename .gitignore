@@ -174,3 +174,6 @@ kaggle-kakr-housing-data.zip
 04_NLP/NLP01/s2s_translation_proj.ipynb
 # kaggle 제출 csv (생성물)
 **/submission.csv
+
+# archives
+*.zip
