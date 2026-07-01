@@ -177,3 +177,6 @@ kaggle-kakr-housing-data.zip
 
 # archives
 *.zip
+
+# MQ02 학습 모델 가중치 (best.pt만, 100MB 미만 - 팀 재평가용)
+!Main_Quest/MQ02/results/*/best.pt
