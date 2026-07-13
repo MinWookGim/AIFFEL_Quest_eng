@@ -180,3 +180,8 @@ kaggle-kakr-housing-data.zip
 
 # MQ02 학습 모델 가중치 (best.pt만, 100MB 미만 - 팀 재평가용)
 !Main_Quest/MQ02/results/*/best.pt
+
+# 아이펠 노드 원본 노트북 (아이펠 저작물 — 제출물 아님, 커밋 금지)
+node학습/
+**/node학습/
+node_study.ipynb
