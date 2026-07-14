@@ -185,3 +185,11 @@ kaggle-kakr-housing-data.zip
 node학습/
 **/node학습/
 node_study.ipynb
+
+# MQ03 - 토크나이저 학습용 말뭉치. 원본 CSV에서 재생성되므로 커밋 불필요
+Main_Quest/MQ03/chatbot_corpus.txt
+
+# MQ03 학습 결과물 (26MB, 100MB 미만). 체크포인트와 토크나이저는 한 세트다 -
+# 토크나이저가 없으면 토큰 id가 안 맞아 체크포인트를 못 쓴다. 둘 다 올려서
+# 학습을 다시 돌리지 않고도 생성만 바로 확인할 수 있게 한다.
+!Main_Quest/MQ03/gpt_best.pt
