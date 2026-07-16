@@ -193,3 +193,6 @@ Main_Quest/MQ03/chatbot_corpus.txt
 # 토크나이저가 없으면 토큰 id가 안 맞아 체크포인트를 못 쓴다. 둘 다 올려서
 # 학습을 다시 돌리지 않고도 생성만 바로 확인할 수 있게 한다.
 !Main_Quest/MQ03/gpt_best.pt
+
+# LLM01 학습된 mini BERT 가중치 (7.2MB, 100MB 미만). 학습된 모델 제출 루브릭용.
+!05_LLM/LLM01/bert_pretrain_final.pt
