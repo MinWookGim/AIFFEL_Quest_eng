@@ -1,0 +1,64 @@
+{
+  "n_normals": 200,
+  "note": "compare_fp_norm.py 동일 200장·동일 정의, WBF는 ensemble_wbf_final.py 동일 구성",
+  "yolov8s_n1500@0.25": {
+    "fp_imgs": 34,
+    "rate_pct": 17.0,
+    "fp_boxes": 41
+  },
+  "yolo11s_n750@0.25": {
+    "fp_imgs": 47,
+    "rate_pct": 23.5,
+    "fp_boxes": 59
+  },
+  "yolov10s_n750@0.25": {
+    "fp_imgs": 33,
+    "rate_pct": 16.5,
+    "fp_boxes": 37
+  },
+  "yolo12s_n750@0.25": {
+    "fp_imgs": 30,
+    "rate_pct": 15.0,
+    "fp_boxes": 32
+  },
+  "ENS_YOLO@0.25": {
+    "fp_imgs": 25,
+    "rate_pct": 12.5,
+    "fp_boxes": 28
+  },
+  "ENS_ALL@0.25": {
+    "fp_imgs": 31,
+    "rate_pct": 15.5,
+    "fp_boxes": 37
+  },
+  "yolov8s_n1500@0.05": {
+    "fp_imgs": 93,
+    "rate_pct": 46.5,
+    "fp_boxes": 188
+  },
+  "yolo11s_n750@0.05": {
+    "fp_imgs": 98,
+    "rate_pct": 49.0,
+    "fp_boxes": 240
+  },
+  "yolov10s_n750@0.05": {
+    "fp_imgs": 87,
+    "rate_pct": 43.5,
+    "fp_boxes": 169
+  },
+  "yolo12s_n750@0.05": {
+    "fp_imgs": 90,
+    "rate_pct": 45.0,
+    "fp_boxes": 201
+  },
+  "ENS_YOLO@0.05": {
+    "fp_imgs": 89,
+    "rate_pct": 44.5,
+    "fp_boxes": 170
+  },
+  "ENS_ALL@0.05": {
+    "fp_imgs": 124,
+    "rate_pct": 62.0,
+    "fp_boxes": 255
+  }
+}
