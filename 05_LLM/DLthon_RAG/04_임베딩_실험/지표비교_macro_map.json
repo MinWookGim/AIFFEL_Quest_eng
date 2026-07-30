@@ -1,0 +1,22 @@
+{
+  "CLIP 기준선": {
+    "micro_p5": 0.3986,
+    "macro_p5": 0.4289,
+    "macro_map5": 0.3536
+  },
+  "민욱-흑백CLIP": {
+    "micro_p5": 0.3711,
+    "macro_p5": 0.3904,
+    "macro_map5": 0.3172
+  },
+  "민욱-패치셔플CLIP": {
+    "micro_p5": 0.4271,
+    "macro_p5": 0.4401,
+    "macro_map5": 0.3604
+  },
+  "Gram VGG19": {
+    "micro_p5": 0.4914,
+    "macro_p5": 0.4774,
+    "macro_map5": 0.4033
+  }
+}
