@@ -290,7 +290,11 @@ def make_generate_images(mock=False, sequential=False, outdir=OUT, budget=None, 
                 img = Image.new("RGB", (512, 512), (232, 232, 232))
                 d = ImageDraw.Draw(img)
                 d.rectangle([6, 6, 505, 505], outline=(120, 120, 120))
-                d.text((16, 16), f"cut {k} (mock)", fill=(0, 0, 0))
+                # ★ 진짜 생성물과 섞여 보이면 안 된다. 자리표시라고 크게 적는다
+                d.rectangle([6, 6, 505, 44], fill=(190, 60, 60))
+                # PIL 기본 폰트는 한글이 네모로 나온다. 배너는 아스키로 쓴다
+                d.text((16, 18), f"MOCK - PLACEHOLDER, NOT A REAL IMAGE   cut {k}",
+                       fill=(255, 255, 255))
                 for j in range(10):
                     d.text((16, 56 + j * 18), scene[j * 46:(j + 1) * 46], fill=(70, 70, 70))
                 p = os.path.join(outdir, f"e2e_mock_cut{k}.png")
@@ -558,8 +562,10 @@ def main():
     print(f"    이웃적중 {f3(ev['neighbor_hit'])} / 컷간코사인 {f3(ev['edition_cosine'])}"
           f"{'  ★복붙 의심' if ev.get('copy_paste_flag') else ''}")
 
-    save_comparison(a.target, state["references"], state["generated_images"],
-                    ev["labels"], tag="_seq" if a.sequential else "")
+    # ★ 산출물이 드라이브에 쌓이므로 파일명으로 갈라 둔다. 안 그러면 모의 결과가
+    #   진짜 결과를 덮어써서, 나중에 그림만 보고는 뭐가 뭔지 모른다.
+    save_comparison(a.target, state["references"], state["generated_images"], ev["labels"],
+                    tag=("_mock" if a.mock else "") + ("_seq" if a.sequential else ""))
 
     rec = {"story": a.story, "target": a.target, "retriever": a.kind,
            "sequential": a.sequential, "mock": a.mock,
