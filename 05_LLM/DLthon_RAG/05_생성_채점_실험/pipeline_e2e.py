@@ -183,6 +183,10 @@ def make_write_cuts(use_llm=True):
             # ★ 길이만 보지 않는다. 모양까지 문자열로 맞춘다 (as_scenes 주석 참고)
             cuts = as_scenes(json.loads(txt), N_CUTS)
             return cuts
+        except FileNotFoundError:
+            # 5·6절(무료 구간)에서는 키가 아직 없는 게 정상이다. '실패'로 보이면 안 된다
+            print("    (API 키가 아직 없어 목 대본으로 갑니다 — 무료 구간에서는 정상입니다)")
+            return list(MOCK_CUTS)
         except Exception as e:
             print(f"    대본 LLM 실패 -> 목 대본으로 간다: {repr(e)[:120]}")
             return list(MOCK_CUTS)
@@ -464,6 +468,13 @@ def main():
     # 안전필터로 컷이 빠지면 일부 지표가 None 이다. 그때도 안 터지게 찍는다
     def f3(v, unit=""):
         return "—(잴 컷이 모자람)" if v is None else (f"{v:.1%}" if unit == "%" else f"{v:.3f}")
+
+    if a.mock:
+        print("\n    ★★ 모의(mock) 실행입니다 — 아래 점수는 아무 의미가 없습니다.")
+        print("       자리표시 이미지는 회색 빈 상자라 '그림'이 아닙니다.")
+        print("       (실측: 그 빈 상자가 vec_undraw 로 1.000, 천장의 102% 를 받습니다.")
+        print("        Gram 채점기가 vec_undraw 를 사실상 '납작하고 질감 없음'으로 잡기 때문입니다.)")
+        print("       뼈대가 끝까지 도는지만 보세요. 점수는 8절에서 진짜로 뽑은 다음에 읽습니다.")
 
     print(f"\n    라벨 판정: {ev['labels']}")
     if ev.get("n_cuts", N_CUTS) < N_CUTS:
