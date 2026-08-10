@@ -199,7 +199,8 @@ def save_comparison(target, references, generated_paths, labels, outdir=OUT, tag
         ax.set_title(f"GEN cut{j+1}\n{lab}", fontsize=8,
                      color="green" if lab == target else "red")
         ax.axis("off")
-    fig.suptitle(f"target: {target}   (초록 = 목표와 같음)", fontsize=11)
+    # 코랩에는 한글 폰트가 없다. 그림 안 글자는 아스키로 쓴다 (안 그러면 네모로 나온다)
+    fig.suptitle(f"target: {target}   (green = matches target)", fontsize=11)
     fig.tight_layout()
     os.makedirs(outdir, exist_ok=True)
     # ★ 파일명에 한글을 쓰지 않는다.
