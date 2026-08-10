@@ -89,6 +89,48 @@ MOCK_CUTS = [
 ]
 
 
+def as_scenes(raw, n=None):
+    """LLM 이 뱉은 것을 **장면 문자열 리스트**로 강제한다.
+
+    왜 필요한가 (2026-08-10 코랩에서 터짐)
+        프롬프트로 `["장면1", ...]` 를 요구해도 모델이 `[{"scene": "..."}, ...]` 처럼
+        객체 배열을 주는 때가 있다. 길이만 검사하고 넘겼더니 dict 가 그대로 흘러가서
+        출력에서 `c[:88]` 이 KeyError 로 터졌다.
+        ★ 더 나쁜 건 안 터졌을 경우다 — dict 가 그대로 생성 프롬프트에 박혀
+          `Draw ... {'scene': ...}` 같은 문장으로 그림을 뽑았을 것이다.
+
+    그래서 **경계에서 모양을 맞춘다.** 안쪽 노드는 문자열만 본다.
+    """
+    if isinstance(raw, dict):
+        # {"scenes": [...]} / {"panels": [...]} 처럼 한 겹 싸서 주는 경우
+        for v in raw.values():
+            if isinstance(v, list):
+                raw = v
+                break
+    if not isinstance(raw, list):
+        raise ValueError(f"장면 목록이 아니다: {type(raw).__name__}")
+
+    out = []
+    for item in raw:
+        if isinstance(item, str):
+            out.append(item.strip())
+        elif isinstance(item, dict):
+            # 흔한 키를 먼저 보고, 없으면 문자열 값을 이어 붙인다
+            for k in ("scene", "description", "prompt", "text", "caption", "panel", "content"):
+                if isinstance(item.get(k), str):
+                    out.append(item[k].strip())
+                    break
+            else:
+                out.append(" ".join(str(v) for v in item.values() if isinstance(v, str)).strip())
+        else:
+            out.append(str(item).strip())
+
+    out = [s for s in out if s]
+    if n is not None and len(out) != n:
+        raise ValueError(f"{n}컷이 필요한데 {len(out)}컷이 나왔다")
+    return out
+
+
 def make_write_cuts(use_llm=True):
     """한 줄 이야기 -> 4컷 장면. 키가 없거나 실패하면 목(mock)으로 내려간다.
 
@@ -110,8 +152,8 @@ def make_write_cuts(use_llm=True):
                            f"이야기: {story}"}])
             txt = r.choices[0].message.content.strip()
             txt = txt.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-            cuts = json.loads(txt)
-            assert len(cuts) == N_CUTS, f"{len(cuts)}컷이 나왔다"
+            # ★ 길이만 보지 않는다. 모양까지 문자열로 맞춘다 (as_scenes 주석 참고)
+            cuts = as_scenes(json.loads(txt), N_CUTS)
             return cuts
         except Exception as e:
             print(f"    대본 LLM 실패 -> 목 대본으로 간다: {repr(e)[:120]}")
