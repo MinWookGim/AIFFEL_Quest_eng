@@ -201,7 +201,11 @@ def save_comparison(target, references, generated_paths, labels, outdir=OUT, tag
     fig.suptitle(f"target: {target}   (초록 = 목표와 같음)", fontsize=11)
     fig.tight_layout()
     os.makedirs(outdir, exist_ok=True)
-    out = os.path.join(outdir, f"비교_{target}{tag}.png")
+    # ★ 파일명에 한글을 쓰지 않는다.
+    #   구글 드라이브 마운트는 이름을 NFD 로 돌려줄 수 있어서, NFC 로 쓴 glob 패턴
+    #   ("비교_*.png") 이 **글자가 같아 보여도 안 맞는다.**
+    #   2026-08-10 실측: 폴더 목록(`*`)에는 나오는데 접두사 매칭만 조용히 실패했다.
+    out = os.path.join(outdir, f"compare_{target}{tag}.png")
     fig.savefig(out, dpi=95, bbox_inches="tight")
     plt.close(fig)
     print(f"    비교 그림: {out}")
