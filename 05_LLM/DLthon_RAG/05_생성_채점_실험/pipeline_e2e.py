@@ -361,18 +361,19 @@ def make_generate_images(mock=False, sequential=False, outdir=OUT, budget=None, 
             total += c.get("달러", 0)
             print(f"    컷{k} 생성 {time.time()-t0:.1f}초  ${c.get('달러', 0):.3f}")
         print(f"    생성 합계 ${total:.3f}")
-        # 잔액은 API 로 못 얻는다 -> 내가 쓴 누적액을 적어 두고 보여준다 (log_spend 주석 참고)
+        # 누적은 기록만 하고, **--budget 을 준 사람에게만** 보여준다.
+        # ★ 이 금액은 usage 토큰 x 단가표로 낸 추정치다. 공유 문서의 기본 출력에 띄우면
+        #   실제 청구액으로 오해할 소지가 있어 기본값에서는 감춘다 (2026-08-10 팀 피드백).
         this, cum, n = log_spend(total, note)
-        line = f"    누적 사용 ${cum:.3f} ({n}회)"
         if budget is not None:
             left = budget - cum
-            line += f"  |  예산 ${budget:.2f} 중 남음 ${left:.3f}"
+            line = f"    누적(추정) ${cum:.3f} ({n}회)  |  예산 ${budget:.2f} 중 남음 ${left:.3f}"
             if left < 0:
                 line += "  ★ 예산 초과"
             elif left < budget * 0.2:
                 line += "  ★ 20% 미만"
-        print(line)
-        print("    (usage 토큰 x 단가표로 낸 추정치다. 실제 청구는 OpenAI 대시보드가 기준)")
+            print(line)
+            print("    (usage 토큰 x 단가표 추정. 실제 청구는 OpenAI 대시보드가 기준)")
         if skipped:
             print(f"    ★ 건너뛴 컷: {skipped} — {len(paths_out)}장으로 이어간다")
         if not paths_out:
