@@ -131,6 +131,34 @@ def as_scenes(raw, n=None):
     return out
 
 
+SPEND_LOG = os.environ.get("SPEND_LOG") or os.path.join(ROOT, "verify", "spend_log.json")
+
+
+def log_spend(usd, note=""):
+    """이번 실행에서 쓴 돈을 누적 기록하고 (이번, 누적, 횟수) 를 돌려준다.
+
+    ★ OpenAI 는 **일반 API 키로 잔액을 알려주지 않는다.** 잔액 엔드포인트가 공개돼 있지 않고,
+      Usage API 는 Admin 키가 따로 필요하며 그것도 '사용량'이지 '잔액'이 아니다.
+      그래서 잔액 대신 **내가 쓴 누적액**을 직접 적어 둔다. 예산을 정해두면 남은 액도 계산된다.
+
+    ★ 이 금액은 응답의 usage 토큰 x 단가표(ab.RATE)로 낸 **추정치**다.
+      실제 청구는 OpenAI 대시보드가 기준이다. 단가가 바뀌면 ab.RATE 를 고쳐야 한다.
+    """
+    rec = {"usd": round(float(usd), 4), "note": note}
+    try:
+        hist = json.load(open(SPEND_LOG, encoding="utf-8"))
+    except Exception:
+        hist = []
+    hist.append(rec)
+    try:
+        os.makedirs(os.path.dirname(SPEND_LOG), exist_ok=True)
+        with open(SPEND_LOG, "w", encoding="utf-8") as f:
+            json.dump(hist, f, ensure_ascii=False, indent=1)
+    except Exception as e:
+        print(f"    (지출 기록 저장 실패 — 누적은 이번 값만: {repr(e)[:80]})")
+    return float(usd), sum(h.get("usd", 0) for h in hist), len(hist)
+
+
 def make_write_cuts(use_llm=True):
     """한 줄 이야기 -> 4컷 장면. 키가 없거나 실패하면 목(mock)으로 내려간다.
 
@@ -190,7 +218,7 @@ def make_retrieve_references(E, style, content, paths):
 # ─────────────────────────────────────────────────────────────
 # 노드 3 — 이미지 생성 (지금까지 나만 갖고 있던 칸)
 # ─────────────────────────────────────────────────────────────
-def make_generate_images(mock=False, sequential=False, outdir=OUT):
+def make_generate_images(mock=False, sequential=False, outdir=OUT, budget=None, note=""):
     """4컷을 생성한다.
 
     sequential=False : 컷마다 레퍼런스만 (지금 파이프라인 방식)
@@ -254,6 +282,18 @@ def make_generate_images(mock=False, sequential=False, outdir=OUT):
             total += c.get("달러", 0)
             print(f"    컷{k} 생성 {time.time()-t0:.1f}초  ${c.get('달러', 0):.3f}")
         print(f"    생성 합계 ${total:.3f}")
+        # 잔액은 API 로 못 얻는다 -> 내가 쓴 누적액을 적어 두고 보여준다 (log_spend 주석 참고)
+        this, cum, n = log_spend(total, note)
+        line = f"    누적 사용 ${cum:.3f} ({n}회)"
+        if budget is not None:
+            left = budget - cum
+            line += f"  |  예산 ${budget:.2f} 중 남음 ${left:.3f}"
+            if left < 0:
+                line += "  ★ 예산 초과"
+            elif left < budget * 0.2:
+                line += "  ★ 20% 미만"
+        print(line)
+        print("    (usage 토큰 x 단가표로 낸 추정치다. 실제 청구는 OpenAI 대시보드가 기준)")
         if skipped:
             print(f"    ★ 건너뛴 컷: {skipped} — {len(paths_out)}장으로 이어간다")
         if not paths_out:
@@ -361,6 +401,8 @@ def main():
     ap.add_argument("--sequential", action="store_true", help="앞 컷을 물려서 생성")
     ap.add_argument("--mock", action="store_true", help="생성만 자리표시로 (무료 완주)")
     ap.add_argument("--no-llm", action="store_true", help="대본도 목으로 (완전 무료)")
+    ap.add_argument("--budget", type=float, default=None,
+                    help="이번 작업에 쓰기로 한 예산($). 주면 남은 금액을 같이 보여준다")
     ap.add_argument("--dry-run", action="store_true", help="검색·눈금까지만 하고 생성 전에 멈춘다")
     a = ap.parse_args()
 
@@ -398,7 +440,9 @@ def main():
     deps = PipelineDependencies(
         write_cuts=make_write_cuts(use_llm=not a.no_llm),
         retrieve_references=make_retrieve_references(E, style, content, paths),
-        generate_images=make_generate_images(mock=a.mock, sequential=a.sequential),
+        generate_images=make_generate_images(
+            mock=a.mock, sequential=a.sequential, budget=a.budget,
+            note=f"{a.target}/{a.kind}/{'seq' if a.sequential else 'ind'}"),
         evaluate_images=make_evaluate_images(Eg, style, content, a.target, ceiling),
     )
 
