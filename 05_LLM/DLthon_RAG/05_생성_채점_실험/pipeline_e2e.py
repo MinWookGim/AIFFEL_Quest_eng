@@ -51,7 +51,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ab_prev_cut as ab          # 코퍼스 로딩·임베딩 캐시·생성 프롬프트를 재사용한다
 
 ROOT = ab.ROOT
-OUT = os.path.join(ROOT, "verify", "e2e")
+# ★ 산출물 위치. 코랩은 /content 가 세션이 끝나면 통째로 날아간다.
+#   E2E_OUT 로 구글 드라이브를 가리키면 그림·json 이 남는다 (노트북이 그렇게 잡아준다).
+OUT = os.environ.get("E2E_OUT") or os.path.join(ROOT, "verify", "e2e")
 N_REF, N_CUTS, TOPK = 3, 4, 5
 
 
