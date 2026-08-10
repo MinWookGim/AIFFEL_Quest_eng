@@ -219,7 +219,7 @@ def make_generate_images(mock=False, sequential=False, outdir=OUT):
         from openai import OpenAI
         client = OpenAI(api_key=open(os.path.expanduser("~/.config/openai/api_key")).read().strip())
         ref_imgs = [Image.open(r["image_path"]).convert("RGB") for r in references]
-        made, paths_out, total = [], [], 0.0
+        made, paths_out, total, skipped = [], [], 0.0, []
         for k, scene in enumerate(cuts, 1):
             imgs = list(ref_imgs)
             prompt = ab.PROMPT.format(scene=scene)
@@ -227,10 +227,24 @@ def make_generate_images(mock=False, sequential=False, outdir=OUT):
                 imgs = list(ref_imgs) + [made[0]]      # 맨 뒤에 컷1 을 붙인다
                 prompt = ab.PROMPT_SEQ.format(scene=scene)
             t0 = time.time()
-            r = client.images.edit(
-                model=ab.MODEL, size=ab.SIZE, quality=ab.QUALITY,
-                image=[ab.to_file(x, f"r{i}.png") for i, x in enumerate(imgs)],
-                prompt=prompt)
+            try:
+                r = client.images.edit(
+                    model=ab.MODEL, size=ab.SIZE, quality=ab.QUALITY,
+                    image=[ab.to_file(x, f"r{i}.png") for i, x in enumerate(imgs)],
+                    prompt=prompt)
+            except Exception as e:
+                # ★ 한 컷이 거부돼도 편 전체를 죽이지 않는다 (2026-08-10 코랩에서 겪음).
+                #   그냥 예외를 올리면 **이미 뽑아서 돈을 낸 앞 컷까지 통째로 날아간다.**
+                #   실측으로 안전필터 거부는 16편 중 1편 꼴이라 드문 일도 아니다.
+                msg = repr(e)
+                blocked = "moderation_blocked" in msg or "safety system" in msg
+                print(f"    컷{k} 실패 ({'안전필터 거부' if blocked else '오류'}) "
+                      f"— 이 컷만 건너뛴다: {msg[:150]}")
+                if blocked and "sexual" in msg:
+                    print("      ↳ 레퍼런스가 서양 고전 회화면 누드가 섞여 출력 모더레이션에 걸리기 쉽다."
+                          " 다른 그림체(--target vec_undraw / ink_m3)로 바꿔 보면 대개 통과한다.")
+                skipped.append(k)
+                continue
             img = Image.open(io.BytesIO(base64.b64decode(r.data[0].b64_json))).convert("RGB")
             made.append(img)
             p = os.path.join(outdir, f"e2e_cut{k}.png")
@@ -240,6 +254,12 @@ def make_generate_images(mock=False, sequential=False, outdir=OUT):
             total += c.get("달러", 0)
             print(f"    컷{k} 생성 {time.time()-t0:.1f}초  ${c.get('달러', 0):.3f}")
         print(f"    생성 합계 ${total:.3f}")
+        if skipped:
+            print(f"    ★ 건너뛴 컷: {skipped} — {len(paths_out)}장으로 이어간다")
+        if not paths_out:
+            raise SystemExit(
+                "모든 컷이 거부됐습니다. 이 그림체 레퍼런스로는 생성이 안 됩니다.\n"
+                "  --target 을 바꿔 보세요 (예: --target vec_undraw / ink_m3).")
         return paths_out
     return generate_images
 
@@ -279,12 +299,15 @@ def make_evaluate_images(Eg, style, content, target, ceiling=None):
         S = V @ V.T
         iu = np.triu_indices(len(V), k=1)
         prec = float((labels == target).mean())
+        # ★ 안전필터로 컷이 빠지면 1~3장만 남을 수 있다. 그때 빈 배열 평균은 nan 이 되고,
+        #   nan 이 그대로 json 에 박히면 나중에 "왜 점수가 없지"로 헤맨다. 없으면 None 으로 둔다.
         out = {
             "target": target,
+            "n_cuts": int(len(V)),
             "style_precision": prec,
-            "style_precision_tail": float((labels[1:] == target).mean()),  # 컷1 잡음 제외
+            "style_precision_tail": float((labels[1:] == target).mean()) if len(labels) > 1 else None,
             "neighbor_hit": float(np.mean(hits)),
-            "edition_cosine": float(S[iu].mean()),
+            "edition_cosine": float(S[iu].mean()) if len(iu[0]) else None,
             "labels": labels.tolist(),
         }
         if ceiling:
@@ -394,12 +417,18 @@ def main():
 
     state = run_pipeline(deps, a.story, paths[q])
     ev = state["evaluation"]
+    # 안전필터로 컷이 빠지면 일부 지표가 None 이다. 그때도 안 터지게 찍는다
+    def f3(v, unit=""):
+        return "—(잴 컷이 모자람)" if v is None else (f"{v:.1%}" if unit == "%" else f"{v:.3f}")
+
     print(f"\n    라벨 판정: {ev['labels']}")
-    print(f"    style_precision {ev['style_precision']:.3f} (컷2~4 {ev['style_precision_tail']:.3f})")
+    if ev.get("n_cuts", N_CUTS) < N_CUTS:
+        print(f"    ★ {N_CUTS}컷 중 {ev['n_cuts']}장으로 채점했다 (나머지는 생성에서 빠졌다)")
+    print(f"    style_precision {f3(ev['style_precision'])} (컷2~4 {f3(ev['style_precision_tail'])})")
     if ev.get("ceiling"):
-        print(f"    천장 {ev['ceiling']:.3f} 대비 {ev['ceiling_ratio']:.1%}")
-    print(f"    이웃적중 {ev['neighbor_hit']:.3f} / 컷간코사인 {ev['edition_cosine']:.3f}"
-          f"{'  ★복붙 의심' if ev['copy_paste_flag'] else ''}")
+        print(f"    천장 {ev['ceiling']:.3f} 대비 {f3(ev.get('ceiling_ratio'), '%')}")
+    print(f"    이웃적중 {f3(ev['neighbor_hit'])} / 컷간코사인 {f3(ev['edition_cosine'])}"
+          f"{'  ★복붙 의심' if ev.get('copy_paste_flag') else ''}")
 
     rec = {"story": a.story, "target": a.target, "retriever": a.kind,
            "sequential": a.sequential, "mock": a.mock,
