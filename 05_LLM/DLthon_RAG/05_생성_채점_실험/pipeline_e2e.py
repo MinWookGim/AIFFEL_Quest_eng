@@ -276,7 +276,7 @@ def make_retrieve_references(E, style, content, paths):
 # 노드 3 — 이미지 생성 (지금까지 나만 갖고 있던 칸)
 # ─────────────────────────────────────────────────────────────
 def make_generate_images(mock=False, sequential=False, outdir=OUT, budget=None, note="",
-                         retry=2):
+                         retry=2, replay=False, target_name=""):
     """4컷을 생성한다.
 
     sequential=False : 컷마다 레퍼런스만 (지금 파이프라인 방식)
@@ -305,6 +305,39 @@ def make_generate_images(mock=False, sequential=False, outdir=OUT, budget=None, 
                 img.save(p)
                 out.append(p)
             return out
+
+        if replay:
+            # ★ 이미 뽑아둔 진짜 컷을 그대로 쓴다. 생성만 건너뛰고 검색·채점은 진짜로 돈다.
+            #   왜 필요한가: 목(mock)은 회색 상자라 "그림이 어떻게 나오나"를 못 보여준다.
+            #   그렇다고 시연 때마다 진짜로 뽑으면 편당 80~110초에 돈이 들고, 안전필터에
+            #   막힐 수도 있다. 시연·수업용으로는 **무료 + 진짜 그림 + 실패 없음**이 필요하다.
+            found = sorted(
+                (os.path.join(outdir, f) for f in os.listdir(outdir)
+                 if f.startswith("e2e_cut") and f.endswith(".png")),
+                key=lambda x: os.path.basename(x))
+            if not found:
+                raise SystemExit(
+                    f"다시 볼 그림이 없습니다: {outdir}\n"
+                    "  --replay 는 예전에 진짜로 뽑아둔 e2e_cut*.png 를 다시 채점합니다.\n"
+                    "  한 번은 진짜로 돌려야 합니다(--replay 없이). 또는 팀 드라이브의 결과 폴더를 쓰세요.")
+            # ★ 폴더의 컷이 **다른 그림체**로 뽑힌 것일 수 있다. 그대로 채점하면 숫자가 헛것이 된다.
+            #   직전 실행 기록(e2e_*.json)에서 목표를 읽어 다르면 알려준다.
+            prev = None
+            for f in sorted(os.listdir(outdir), key=lambda x: os.path.getmtime(os.path.join(outdir, x))):
+                if f.startswith("e2e_") and f.endswith(".json"):
+                    try:
+                        prev = json.load(open(os.path.join(outdir, f), encoding="utf-8")).get("target")
+                    except Exception:
+                        pass
+            print(f"    다시 보기: 이미 뽑아둔 {len(found)}장을 그대로 씁니다 (생성 호출 없음, 무료)")
+            for f in found:
+                print("      " + os.path.basename(f))
+            if prev and prev != target_name:
+                print(f"    ★ 이 그림들은 '{prev}' 로 뽑은 것입니다. 지금 목표는 '{target_name}' 이라")
+                print("      아래 점수는 '{0}' 그림을 '{1}' 기준으로 잰 값입니다 — 낮게 나오는 게 당연합니다."
+                      .format(prev, target_name))
+                print("      같은 그림체로 보려면 5절에서 목표를 '{0}' 로 맞추세요.".format(prev))
+            return found
 
         from openai import OpenAI
         client = OpenAI(api_key=open(os.path.expanduser("~/.config/openai/api_key")).read().strip())
@@ -485,6 +518,8 @@ def main():
     ap.add_argument("--sequential", action="store_true", help="앞 컷을 물려서 생성")
     ap.add_argument("--mock", action="store_true", help="생성만 자리표시로 (무료 완주)")
     ap.add_argument("--no-llm", action="store_true", help="대본도 목으로 (완전 무료)")
+    ap.add_argument("--replay", action="store_true",
+                    help="이미 뽑아둔 진짜 컷을 다시 채점한다 (무료·진짜 그림. 시연용)")
     ap.add_argument("--retry", type=int, default=2,
                     help="안전필터로 막힌 컷을 몇 번까지 다시 해볼지 (거부는 확률적이다)")
     ap.add_argument("--budget", type=float, default=None,
@@ -528,6 +563,7 @@ def main():
         retrieve_references=make_retrieve_references(E, style, content, paths),
         generate_images=make_generate_images(
             mock=a.mock, sequential=a.sequential, budget=a.budget, retry=a.retry,
+            replay=a.replay, target_name=a.target,
             note=f"{a.target}/{a.kind}/{'seq' if a.sequential else 'ind'}"),
         evaluate_images=make_evaluate_images(Eg, style, content, a.target, ceiling),
     )
