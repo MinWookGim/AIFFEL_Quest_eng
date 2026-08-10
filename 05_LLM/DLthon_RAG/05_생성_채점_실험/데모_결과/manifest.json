@@ -1,0 +1,44 @@
+{
+ "note": "라이브 데모용. cut1_guard 실험에서 실제로 생성한 그림을 640px JPEG 로 줄인 것",
+ "editions": [
+  {
+   "style": "ink_m3",
+   "cuts": 4,
+   "from": "ink_m3_rep2_ind",
+   "ref_hit": 3,
+   "labels": [
+    "paint_Baroque",
+    "paint_Baroque",
+    "ink_m1",
+    "ink_m4"
+   ],
+   "style_precision_tail": 0.0
+  },
+  {
+   "style": "paint_Baroque",
+   "cuts": 4,
+   "from": "paint_Baroque_rep1_seq",
+   "ref_hit": 2,
+   "labels": [
+    "paint_Baroque",
+    "paint_Baroque",
+    "paint_Baroque",
+    "paint_Baroque"
+   ],
+   "style_precision_tail": 1.0
+  },
+  {
+   "style": "vec_undraw",
+   "cuts": 4,
+   "from": "vec_undraw_rep2_bon_seq",
+   "ref_hit": 3,
+   "labels": [
+    "paint_Cubism",
+    "paint_Baroque",
+    "vec_undraw",
+    "paint_Cubism"
+   ],
+   "style_precision_tail": 0.3333333333333333
+  }
+ ]
+}

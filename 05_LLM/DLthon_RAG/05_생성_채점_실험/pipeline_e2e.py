@@ -41,6 +41,7 @@ import json
 import os
 import sys
 import time
+import unicodedata
 from dataclasses import dataclass
 from typing import Any, Callable, TypedDict
 
@@ -311,15 +312,26 @@ def make_generate_images(mock=False, sequential=False, outdir=OUT, budget=None, 
             #   왜 필요한가: 목(mock)은 회색 상자라 "그림이 어떻게 나오나"를 못 보여준다.
             #   그렇다고 시연 때마다 진짜로 뽑으면 편당 80~110초에 돈이 들고, 안전필터에
             #   막힐 수도 있다. 시연·수업용으로는 **무료 + 진짜 그림 + 실패 없음**이 필요하다.
-            found = sorted(
-                (os.path.join(outdir, f) for f in os.listdir(outdir)
-                 if f.startswith("e2e_cut") and f.endswith(".png")),
-                key=lambda x: os.path.basename(x))
+            # 찾는 순서: (1) 지금 목표 그림체로 뽑아둔 것 (2) 지난 실행의 e2e_cut*.png
+            #   (1) 이 있으면 그림체가 맞으므로 점수도 의미가 있다.
+            def _has(name, *keys):
+                n = unicodedata.normalize("NFC", name).lower()
+                return all(unicodedata.normalize("NFC", k).lower() in n for k in keys)
+
+            files = os.listdir(outdir)
+            found = sorted((os.path.join(outdir, f) for f in files
+                            if _has(f, target_name, "cut") and f.lower().endswith((".png", ".jpg"))),
+                           key=lambda x: os.path.basename(x))
+            if not found:
+                found = sorted((os.path.join(outdir, f) for f in files
+                                if f.startswith("e2e_cut") and f.endswith(".png")),
+                               key=lambda x: os.path.basename(x))
             if not found:
                 raise SystemExit(
                     f"다시 볼 그림이 없습니다: {outdir}\n"
-                    "  --replay 는 예전에 진짜로 뽑아둔 e2e_cut*.png 를 다시 채점합니다.\n"
-                    "  한 번은 진짜로 돌려야 합니다(--replay 없이). 또는 팀 드라이브의 결과 폴더를 쓰세요.")
+                    f"  '{target_name}' 로 뽑아둔 그림도, 지난 실행의 e2e_cut*.png 도 없습니다.\n"
+                    "  -> 노트북 4절(코드 받기)을 다시 실행하면 데모용 그림을 내려받습니다.\n"
+                    "  -> 아니면 9절에서 한 번 진짜로 뽑으세요(--replay 없이).")
             # ★ 폴더의 컷이 **다른 그림체**로 뽑힌 것일 수 있다. 그대로 채점하면 숫자가 헛것이 된다.
             #   직전 실행 기록(e2e_*.json)에서 목표를 읽어 다르면 알려준다.
             prev = None
@@ -332,7 +344,8 @@ def make_generate_images(mock=False, sequential=False, outdir=OUT, budget=None, 
             print(f"    다시 보기: 이미 뽑아둔 {len(found)}장을 그대로 씁니다 (생성 호출 없음, 무료)")
             for f in found:
                 print("      " + os.path.basename(f))
-            if prev and prev != target_name:
+            matched = _has(os.path.basename(found[0]), target_name)
+            if prev and prev != target_name and not matched:
                 print(f"    ★ 이 그림들은 '{prev}' 로 뽑은 것입니다. 지금 목표는 '{target_name}' 이라")
                 print("      아래 점수는 '{0}' 그림을 '{1}' 기준으로 잰 값입니다 — 낮게 나오는 게 당연합니다."
                       .format(prev, target_name))
