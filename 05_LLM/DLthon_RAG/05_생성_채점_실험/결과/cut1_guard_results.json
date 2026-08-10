@@ -1,0 +1,776 @@
+[
+ {
+  "mode": "ind",
+  "style": "vec_undraw",
+  "rep": 0,
+  "retriever": "gram",
+  "query_idx": 2471,
+  "ref_idx": [
+   2383,
+   2447,
+   2491
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 77.6,
+  "cost_usd": 0.1944,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.7218897342681885,
+  "labels": [
+   "paint_Cubism",
+   "paint_Cubism",
+   "vec_irasutoya",
+   "paint_Ukiyo_e"
+  ]
+ },
+ {
+  "mode": "seq",
+  "style": "vec_undraw",
+  "rep": 0,
+  "retriever": "gram",
+  "query_idx": 2471,
+  "ref_idx": [
+   2383,
+   2447,
+   2491
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 93.1,
+  "cost_usd": 0.201,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.9284098148345947,
+  "labels": [
+   "paint_Cubism",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Cubism"
+  ]
+ },
+ {
+  "mode": "bon_seq",
+  "style": "vec_undraw",
+  "rep": 0,
+  "retriever": "gram",
+  "query_idx": 2471,
+  "ref_idx": [
+   2383,
+   2447,
+   2491
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 132.2,
+  "cost_usd": 0.2982,
+  "cut1_cand_scores": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "cut1_picked": 2,
+  "cut1_spread": 0.0,
+  "cut1_tied": true,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.912937581539154,
+  "labels": [
+   "paint_Cubism",
+   "paint_Baroque",
+   "paint_Cubism",
+   "paint_Art_Nouveau"
+  ]
+ },
+ {
+  "mode": "ind",
+  "style": "vec_undraw",
+  "rep": 1,
+  "retriever": "gram",
+  "query_idx": 2405,
+  "ref_idx": [
+   2514,
+   2417,
+   2399
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 73.5,
+  "cost_usd": 0.1944,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.05,
+  "edition_cosine": 0.728807270526886,
+  "labels": [
+   "paint_Cubism",
+   "paint_Cubism",
+   "paint_Cubism",
+   "paint_Art_Nouveau"
+  ]
+ },
+ {
+  "mode": "seq",
+  "style": "vec_undraw",
+  "rep": 1,
+  "retriever": "gram",
+  "query_idx": 2405,
+  "ref_idx": [
+   2514,
+   2417,
+   2399
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 95.6,
+  "cost_usd": 0.201,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.9030923843383789,
+  "labels": [
+   "paint_Cubism",
+   "paint_Cubism",
+   "paint_Cubism",
+   "paint_Ukiyo_e"
+  ]
+ },
+ {
+  "mode": "bon_seq",
+  "style": "vec_undraw",
+  "rep": 1,
+  "retriever": "gram",
+  "query_idx": 2405,
+  "ref_idx": [
+   2514,
+   2417,
+   2399
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 131.3,
+  "cost_usd": 0.2982,
+  "cut1_cand_scores": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "cut1_picked": 1,
+  "cut1_spread": 0.0,
+  "cut1_tied": true,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.1,
+  "edition_cosine": 0.8781015872955322,
+  "labels": [
+   "paint_Cubism",
+   "paint_Cubism",
+   "vec_notoemoji",
+   "paint_Cubism"
+  ]
+ },
+ {
+  "mode": "ind",
+  "style": "vec_undraw",
+  "rep": 2,
+  "retriever": "gram",
+  "query_idx": 2404,
+  "ref_idx": [
+   2500,
+   2390,
+   2418
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 79.6,
+  "cost_usd": 0.1944,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.1,
+  "edition_cosine": 0.7981048226356506,
+  "labels": [
+   "paint_Cubism",
+   "vec_twemoji",
+   "vec_notoemoji",
+   "paint_Cubism"
+  ]
+ },
+ {
+  "mode": "seq",
+  "style": "vec_undraw",
+  "rep": 2,
+  "retriever": "gram",
+  "query_idx": 2404,
+  "ref_idx": [
+   2500,
+   2390,
+   2418
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 93.8,
+  "cost_usd": 0.201,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.05,
+  "edition_cosine": 0.8188626766204834,
+  "labels": [
+   "paint_Cubism",
+   "paint_Cubism",
+   "paint_Cubism",
+   "paint_Cubism"
+  ]
+ },
+ {
+  "mode": "bon_seq",
+  "style": "vec_undraw",
+  "rep": 2,
+  "retriever": "gram",
+  "query_idx": 2404,
+  "ref_idx": [
+   2500,
+   2390,
+   2418
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 133.3,
+  "cost_usd": 0.2982,
+  "cut1_cand_scores": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "cut1_picked": 0,
+  "cut1_spread": 0.0,
+  "cut1_tied": true,
+  "style_precision": 0.25,
+  "style_precision_tail": 0.3333333333333333,
+  "neighbor_hit": 0.1,
+  "edition_cosine": 0.7712991833686829,
+  "labels": [
+   "paint_Cubism",
+   "paint_Baroque",
+   "vec_undraw",
+   "paint_Cubism"
+  ]
+ },
+ {
+  "mode": "ind",
+  "style": "paint_Baroque",
+  "rep": 0,
+  "retriever": "gram",
+  "query_idx": 1392,
+  "ref_idx": [
+   876,
+   428,
+   570
+  ],
+  "ref_hit": 0,
+  "panels_produced": 4,
+  "latency_sec": 90.1,
+  "cost_usd": 0.1944,
+  "style_precision": 0.75,
+  "style_precision_tail": 0.6666666666666666,
+  "neighbor_hit": 0.65,
+  "edition_cosine": 0.8993625640869141,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "ink_m4"
+  ]
+ },
+ {
+  "mode": "seq",
+  "style": "paint_Baroque",
+  "rep": 0,
+  "retriever": "gram",
+  "query_idx": 1392,
+  "ref_idx": [
+   876,
+   428,
+   570
+  ],
+  "ref_hit": 0,
+  "panels_produced": 4,
+  "latency_sec": 90.0,
+  "cost_usd": 0.201,
+  "style_precision": 0.75,
+  "style_precision_tail": 0.6666666666666666,
+  "neighbor_hit": 0.7,
+  "edition_cosine": 0.9262773394584656,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "ink_m4"
+  ]
+ },
+ {
+  "mode": "bon_seq",
+  "style": "paint_Baroque",
+  "rep": 0,
+  "retriever": "gram",
+  "query_idx": 1392,
+  "ref_idx": [
+   876,
+   428,
+   570
+  ],
+  "ref_hit": 0,
+  "panels_produced": 4,
+  "latency_sec": 144.9,
+  "cost_usd": 0.2982,
+  "cut1_cand_scores": [
+   0.8,
+   0.0,
+   0.0
+  ],
+  "cut1_picked": 0,
+  "cut1_spread": 0.8,
+  "cut1_tied": false,
+  "style_precision": 1.0,
+  "style_precision_tail": 1.0,
+  "neighbor_hit": 0.8,
+  "edition_cosine": 0.9384109973907471,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque"
+  ]
+ },
+ {
+  "mode": "ind",
+  "style": "paint_Baroque",
+  "rep": 1,
+  "retriever": "gram",
+  "query_idx": 1418,
+  "ref_idx": [
+   1404,
+   1441,
+   1526
+  ],
+  "ref_hit": 2,
+  "panels_produced": 4,
+  "latency_sec": 81.5,
+  "cost_usd": 0.1944,
+  "style_precision": 0.5,
+  "style_precision_tail": 0.3333333333333333,
+  "neighbor_hit": 0.5,
+  "edition_cosine": 0.8715422749519348,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Impressionism",
+   "paint_Impressionism"
+  ]
+ },
+ {
+  "mode": "seq",
+  "style": "paint_Baroque",
+  "rep": 1,
+  "retriever": "gram",
+  "query_idx": 1418,
+  "ref_idx": [
+   1404,
+   1441,
+   1526
+  ],
+  "ref_hit": 2,
+  "panels_produced": 4,
+  "latency_sec": 92.6,
+  "cost_usd": 0.201,
+  "style_precision": 1.0,
+  "style_precision_tail": 1.0,
+  "neighbor_hit": 0.95,
+  "edition_cosine": 0.930030345916748,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque"
+  ]
+ },
+ {
+  "mode": "bon_seq",
+  "style": "paint_Baroque",
+  "rep": 1,
+  "retriever": "gram",
+  "query_idx": 1418,
+  "ref_idx": [
+   1404,
+   1441,
+   1526
+  ],
+  "ref_hit": 2,
+  "panels_produced": 4,
+  "latency_sec": 135.8,
+  "cost_usd": 0.2982,
+  "cut1_cand_scores": [
+   0.8,
+   1.0,
+   0.8
+  ],
+  "cut1_picked": 1,
+  "cut1_spread": 0.2,
+  "cut1_tied": false,
+  "style_precision": 1.0,
+  "style_precision_tail": 1.0,
+  "neighbor_hit": 0.95,
+  "edition_cosine": 0.9341397285461426,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque"
+  ]
+ },
+ {
+  "mode": "ind",
+  "style": "paint_Baroque",
+  "rep": 2,
+  "retriever": "gram",
+  "query_idx": 1405,
+  "ref_idx": [
+   1427,
+   1422,
+   1562
+  ],
+  "ref_hit": 2,
+  "panels_produced": 4,
+  "latency_sec": 81.0,
+  "cost_usd": 0.1944,
+  "style_precision": 0.75,
+  "style_precision_tail": 0.6666666666666666,
+  "neighbor_hit": 0.7000000000000001,
+  "edition_cosine": 0.8078151345252991,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Impressionism"
+  ]
+ },
+ {
+  "mode": "seq",
+  "style": "paint_Baroque",
+  "rep": 2,
+  "retriever": "gram",
+  "query_idx": 1405,
+  "ref_idx": [
+   1427,
+   1422,
+   1562
+  ],
+  "ref_hit": 2,
+  "panels_produced": 4,
+  "latency_sec": 87.2,
+  "cost_usd": 0.201,
+  "style_precision": 1.0,
+  "style_precision_tail": 1.0,
+  "neighbor_hit": 0.75,
+  "edition_cosine": 0.9561653137207031,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque"
+  ]
+ },
+ {
+  "mode": "bon_seq",
+  "style": "paint_Baroque",
+  "rep": 2,
+  "retriever": "gram",
+  "query_idx": 1405,
+  "ref_idx": [
+   1427,
+   1422,
+   1562
+  ],
+  "ref_hit": 2,
+  "panels_produced": 4,
+  "latency_sec": 133.7,
+  "cost_usd": 0.2982,
+  "cut1_cand_scores": [
+   1.0,
+   0.8,
+   0.6
+  ],
+  "cut1_picked": 0,
+  "cut1_spread": 0.4,
+  "cut1_tied": false,
+  "style_precision": 1.0,
+  "style_precision_tail": 1.0,
+  "neighbor_hit": 0.85,
+  "edition_cosine": 0.9468399882316589,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque"
+  ]
+ },
+ {
+  "mode": "ind",
+  "style": "ink_m3",
+  "rep": 0,
+  "retriever": "gram",
+  "query_idx": 410,
+  "ref_idx": [
+   87,
+   83,
+   184
+  ],
+  "ref_hit": 0,
+  "panels_produced": 4,
+  "latency_sec": 91.6,
+  "cost_usd": 0.1944,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.9071686267852783,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "ink_m5",
+   "paint_Baroque"
+  ]
+ },
+ {
+  "mode": "seq",
+  "style": "ink_m3",
+  "rep": 0,
+  "retriever": "gram",
+  "query_idx": 410,
+  "ref_idx": [
+   87,
+   83,
+   184
+  ],
+  "ref_hit": 0,
+  "panels_produced": 4,
+  "latency_sec": 89.3,
+  "cost_usd": 0.201,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.9419161677360535,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Cubism"
+  ]
+ },
+ {
+  "mode": "bon_seq",
+  "style": "ink_m3",
+  "rep": 0,
+  "retriever": "gram",
+  "query_idx": 410,
+  "ref_idx": [
+   87,
+   83,
+   184
+  ],
+  "ref_hit": 0,
+  "panels_produced": 4,
+  "latency_sec": 138.0,
+  "cost_usd": 0.2982,
+  "cut1_cand_scores": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "cut1_picked": 0,
+  "cut1_spread": 0.0,
+  "cut1_tied": true,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.9530053734779358,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Impressionism"
+  ]
+ },
+ {
+  "mode": "ind",
+  "style": "ink_m3",
+  "rep": 1,
+  "retriever": "gram",
+  "query_idx": 349,
+  "ref_idx": [
+   175,
+   176,
+   358
+  ],
+  "ref_hit": 1,
+  "panels_produced": 4,
+  "latency_sec": 78.8,
+  "cost_usd": 0.1944,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.8245958685874939,
+  "labels": [
+   "paint_Art_Nouveau",
+   "paint_Cubism",
+   "paint_Baroque",
+   "paint_Art_Nouveau"
+  ]
+ },
+ {
+  "mode": "seq",
+  "style": "ink_m3",
+  "rep": 1,
+  "retriever": "gram",
+  "query_idx": 349,
+  "ref_idx": [
+   175,
+   176,
+   358
+  ],
+  "ref_hit": 1,
+  "panels_produced": 4,
+  "latency_sec": 95.5,
+  "cost_usd": 0.201,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.9437279105186462,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Cubism"
+  ]
+ },
+ {
+  "mode": "bon_seq",
+  "style": "ink_m3",
+  "rep": 1,
+  "retriever": "gram",
+  "query_idx": 349,
+  "ref_idx": [
+   175,
+   176,
+   358
+  ],
+  "ref_hit": 1,
+  "panels_produced": 4,
+  "latency_sec": 133.5,
+  "cost_usd": 0.2982,
+  "cut1_cand_scores": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "cut1_picked": 1,
+  "cut1_spread": 0.0,
+  "cut1_tied": true,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.9228983521461487,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Cubism"
+  ]
+ },
+ {
+  "mode": "ind",
+  "style": "ink_m3",
+  "rep": 2,
+  "retriever": "gram",
+  "query_idx": 405,
+  "ref_idx": [
+   386,
+   402,
+   380
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 75.5,
+  "cost_usd": 0.1944,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.8902779221534729,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "ink_m1",
+   "ink_m4"
+  ]
+ },
+ {
+  "mode": "seq",
+  "style": "ink_m3",
+  "rep": 2,
+  "retriever": "gram",
+  "query_idx": 405,
+  "ref_idx": [
+   386,
+   402,
+   380
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 89.3,
+  "cost_usd": 0.201,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.9253481030464172,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque"
+  ]
+ },
+ {
+  "mode": "bon_seq",
+  "style": "ink_m3",
+  "rep": 2,
+  "retriever": "gram",
+  "query_idx": 405,
+  "ref_idx": [
+   386,
+   402,
+   380
+  ],
+  "ref_hit": 3,
+  "panels_produced": 4,
+  "latency_sec": 133.5,
+  "cost_usd": 0.2982,
+  "cut1_cand_scores": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "cut1_picked": 0,
+  "cut1_spread": 0.0,
+  "cut1_tied": true,
+  "style_precision": 0.0,
+  "style_precision_tail": 0.0,
+  "neighbor_hit": 0.0,
+  "edition_cosine": 0.9463171362876892,
+  "labels": [
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque",
+   "paint_Baroque"
+  ]
+ }
+]
